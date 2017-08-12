@@ -14,9 +14,22 @@ public class DialogManager : MonoBehaviour {
 	private int lineNumber;
 	private Line[] activeDialog;
 	private UnityAction lineCompletedCallback;
+	private UnityAction dialogCompleteCallback;
 
-	// Use this for initialization
-	void Start () {
+	public void funStartDialog(int dialogId, UnityAction callback) {
+		if(dialogBox == null) {
+			dialogBox = Instantiate(dialogBoxPrefab, userInterface.transform)
+				.GetComponent<DialogBox>();
+		}
+		
+		lineNumber = 0;
+		activeDialog = dialogsMap[dialogId];
+
+		dialogBox.funLoadLineWithCallback(activeDialog[lineNumber], lineCompletedCallback);
+		dialogCompleteCallback = callback;
+	}
+
+	private void Awake() {
 		lineCompletedCallback = new UnityAction(LineCompleted);
 
 		dialogsMap = new Dictionary<int, Line[]>();
@@ -28,23 +41,6 @@ public class DialogManager : MonoBehaviour {
 			dialogsMap.Add(d.id, d.lines);
 		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-	public void StartDialog(int dialogId) {
-		if(dialogBox == null) {
-			dialogBox = Instantiate(dialogBoxPrefab, userInterface.transform)
-				.GetComponent<DialogBox>();
-		}
-		
-		lineNumber = 0;
-		activeDialog = dialogsMap[dialogId];
-
-		dialogBox.funLoadLineWithCallback(activeDialog[lineNumber], lineCompletedCallback);
-	}
 
 	private void LineCompleted() {
 		lineNumber++;
@@ -53,6 +49,10 @@ public class DialogManager : MonoBehaviour {
 			dialogBox.funLoadLineWithCallback(activeDialog[lineNumber], lineCompletedCallback);
 		} else {
 			Destroy(dialogBox.gameObject);
+
+			if(dialogCompleteCallback != null) {
+				dialogCompleteCallback.Invoke();
+			}
 		}
 	}
 }

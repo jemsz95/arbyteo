@@ -29,7 +29,7 @@ public class DialogTrigger : MonoBehaviour {
 
 	void Trigger() {
 		if(!triggerOnce || !triggered) {
-			manager.StartDialog(dialogId);
+			manager.funStartDialog(dialogId, null);
 			triggered = true;
 			pressAlert.SetActive(false);
 		}

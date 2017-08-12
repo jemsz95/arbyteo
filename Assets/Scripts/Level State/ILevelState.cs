@@ -1,4 +1,4 @@
-interface ILevelState {
+public interface ILevelState {
     void funDayStart();
     void funLunchStart();
     void funLunchEnd();

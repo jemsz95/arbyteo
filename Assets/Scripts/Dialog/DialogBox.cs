@@ -57,13 +57,19 @@ public class DialogBox : MonoBehaviour {
 	// Update is called once per frame
 	void Update() {
 		if(Input.GetButtonDown("Submit")) {
-			StopCoroutine(textCoroutine);
-			StopCoroutine(indicatorCoroutine);
-			moreTextIndicator.enabled = false;
+			if(textCoroutine != null) {
+				StopCoroutine(textCoroutine);
+			}
+
+			if(indicatorCoroutine != null) {
+				StopCoroutine(indicatorCoroutine);
+				moreTextIndicator.enabled = false;
+			}
+
 			line++;
 
 			if (line < dialog.Length) {
-				textCoroutine = DisplayLine ();
+				textCoroutine = DisplayLine();
 				StartCoroutine(textCoroutine);
 			} else {
 				dialogCompleted.Invoke();
