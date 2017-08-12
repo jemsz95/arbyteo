@@ -11,9 +11,11 @@ public class SoundFIx : MonoBehaviour {
 	}
 
 	void Update(){
-		if (_refComponent.time == 13f) {
+		if (_refComponent.time >= 13.45f) {
 			_refComponent.time = 0; 
+			_refComponent.Play (); 
 		}
+	
 	}
 
 }

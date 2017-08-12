@@ -573,7 +573,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -4329,6 +4329,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!1 &2114673129 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1122017810909570, guid: eb01919d682194330997fb3f8ee26e69,
+    type: 2}
+  m_PrefabInternal: {fileID: 2115077951}
+--- !u!114 &2114673130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2114673129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 959657969d3e14c1c985b024e4d8df5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2115077951
 Prefab:
   m_ObjectHideFlags: 0
@@ -4368,7 +4384,8 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114859256466043988, guid: eb01919d682194330997fb3f8ee26e69, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: eb01919d682194330997fb3f8ee26e69, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &2119745288
