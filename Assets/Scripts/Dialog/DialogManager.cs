@@ -43,14 +43,14 @@ public class DialogManager : MonoBehaviour {
 		lineNumber = 0;
 		activeDialog = dialogsMap[dialogId];
 
-		dialogBox.LoadLineWithCallback(activeDialog[lineNumber], lineCompletedCallback);
+		dialogBox.funLoadLineWithCallback(activeDialog[lineNumber], lineCompletedCallback);
 	}
 
 	private void LineCompleted() {
 		lineNumber++;
 
 		if(lineNumber < activeDialog.Length) {
-			dialogBox.LoadLineWithCallback(activeDialog[lineNumber], lineCompletedCallback);
+			dialogBox.funLoadLineWithCallback(activeDialog[lineNumber], lineCompletedCallback);
 		} else {
 			Destroy(dialogBox.gameObject);
 		}

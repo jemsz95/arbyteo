@@ -17,15 +17,19 @@ public class DialogBox : MonoBehaviour {
 	private IEnumerator textCoroutine;
 	private IEnumerator indicatorCoroutine;
 
-	public void LoadLineWithCallback(Line l, UnityAction callback) {
+	public void funLoadLineWithCallback(Line l, UnityAction callback) {
 		dialog = l.message;
-		uiImage.sprite = Resources.Load<Sprite>("Dialog/" + l.image);
+		
+		if(uiImage != null) {
+			uiImage.sprite = Resources.Load<Sprite>("Dialog/" + l.image);
+		}
+		
 		dialogCompleted.RemoveAllListeners();
 		dialogCompleted.AddListener(callback);
-		Reset();
+		funReset();
 	}
 
-	public void Reset() {
+	public void funReset() {
 		line = 0;
 
 		if(textCoroutine != null) {
@@ -36,15 +40,18 @@ public class DialogBox : MonoBehaviour {
 			StopCoroutine(indicatorCoroutine);
 		}
 		
-		moreTextIndicator.enabled = false;
-		textCoroutine = DisplayLine ();
+		if(moreTextIndicator != null) {
+			moreTextIndicator.enabled = false;
+		}
+
+		textCoroutine = DisplayLine();
 
 		StartCoroutine(textCoroutine);
 	}
 
 	// Use this for initialization
 	void Start() {
-		Reset();
+		funReset();
 	}
 	
 	// Update is called once per frame
@@ -113,7 +120,7 @@ public class DialogBox : MonoBehaviour {
 			yield return new WaitForSeconds(12.0f / textSpeed); // 60s / (speed * 5 letters per word)
 		}
 
-		if (line + 1 < dialog.Length) {
+		if (moreTextIndicator != null && line + 1 < dialog.Length) {
 			indicatorCoroutine = BlinkMoreTextIndicator();
 			StartCoroutine(indicatorCoroutine);
 		}
