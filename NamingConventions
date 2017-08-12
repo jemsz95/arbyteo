@@ -1,0 +1,24 @@
+Naming Conventions
+
+                                                        Golden Rules
+                                       1. public members:   exampleText 
+                                       2. private members: _exampleText
+                                          [serializablefield]
+                                       3. public members:   ExampleText 
+                                       4. private members: _ExampleText 
+                 _______________________________________________________________________________________
+                                       
+                                       parameters:    no caps and no camel case
+                                       functions:     funExampleText
+                                       events:        EvExampleText
+                                       bool:          bExampleText
+                                       string:        sExampleText
+                                       float:         fExampleText
+                                       coroutine:     coExampleText
+                                       
+                                       any component reference:     refExampleText
+                                       
+                                       any manager:                 ExampleTextManager
+                                       
+                                       
+                                       
