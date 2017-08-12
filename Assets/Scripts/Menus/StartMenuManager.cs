@@ -7,7 +7,7 @@ public class StartMenuManager : MonoBehaviour {
 
 	
 	public void funPlay() {
-		//SceneManager.LoadScene(2);
+		SceneManager.LoadScene(2);
 	}
 
 	public void funCredits() {
