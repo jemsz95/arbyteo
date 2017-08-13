@@ -112,7 +112,7 @@ public class MemeDesignerManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(_bImageSelected && _bTopTextSelected && _bBottomTextSelected) {
+		if(_bImageSelected && _bTopTextSelected && _bBottomTextSelected && _bLevelStart) {
 			StartCoroutine(coShowMeme());
 			_bImageSelected = false;
 		}
@@ -287,5 +287,13 @@ public class MemeDesignerManager : MonoBehaviour {
 
 	void funPassReferenceToManager() {
 		// Aqui pasar datos
+		_bLevelStart = false; 
+		GameObject manager = GameObject.Find("Game Manager"); 
+		if (manager != null) {
+			//Manager.Instance.something pass references. 
+		} else {
+			Debug.Log ("Score"); 
+		}
+
 	}
 }
