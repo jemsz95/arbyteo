@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; 
 
 public class GameTesterManager : Singleton<GameTesterManager> {
 
 	private float _fLife, _fTime; 
-	[HideInInspector]
-	public float fLife, fTime; 
+	private Text _refTextTime, _refTextLife; 
 	public delegate void levelEvent (); 
 	public static event levelEvent GameTesterEnd; 
 
@@ -14,6 +14,8 @@ public class GameTesterManager : Singleton<GameTesterManager> {
 		_fLife = 100f; 
 		_fTime = 60f; 
 		GameTesterEnd += _funPassReferences; 
+		_refTextTime = GameObject.Find ("Health Button"); 
+		_refTextTime = GameObject.Find ("Send Button"); 
 	}
 
 	public void funAddTime(float famount){
@@ -25,14 +27,14 @@ public class GameTesterManager : Singleton<GameTesterManager> {
 	}
 
 	void Update(){
-		fTime = _fTime - (_fTime % 1f);  
-		Debug.Log (fTime); 
 		if (_fLife <= 0 || _fTime <= 0) {
 			GameTesterEnd (); 
 		} else {
-			_fLife--; 
+			_fLife -= Time.deltaTime; 
 			_fTime -= Time.deltaTime; 
 		}
+		_refTextLife = _fLife; 
+		_refTextTime = _fTime; 
 	}
 
 	void _funPassReferences(){
