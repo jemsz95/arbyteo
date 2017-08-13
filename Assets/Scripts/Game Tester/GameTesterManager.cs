@@ -18,7 +18,7 @@ public class GameTesterManager : Singleton<GameTesterManager> {
 		GameTesterEnd += _funPassReferences; 
 		_refImgLife= GameObject.Find ("Life Fill").GetComponent<Image>(); 
 		_refImgTime = GameObject.Find ("Time Fill").GetComponent<Image> ();
-		_refTutorialText = GameObject.Find ("Tutorial Text").GetComponent<Image> (); 
+		_refTutorialText = GameObject.Find ("Tutorial Box").GetComponent<Image> (); 
 	}
 
 	void Start(){
@@ -38,14 +38,16 @@ public class GameTesterManager : Singleton<GameTesterManager> {
 	}
 
 	void Update(){
-		if (_fLife <= 0 || _fTime <= 0) {
-			GameTesterEnd (); 
-		} else {
-			_fLife -= Time.deltaTime * 8; 
-			_fTime -= Time.deltaTime; 
+		if (_bLevelStart) {
+			if (_fLife <= 0 || _fTime <= 0) {
+				GameTesterEnd (); 
+			} else {
+				_fLife -= Time.deltaTime * 8; 
+				_fTime -= Time.deltaTime; 
+			}
+			_refImgLife.fillAmount = _fLife / 100f; 
+			_refImgTime.fillAmount = _fTime / 60f; 
 		}
-		_refImgLife.fillAmount = _fLife / 100f; 
-		_refImgTime.fillAmount = _fTime / 60f;  
 	}
 
 	void _funPassReferences(){
