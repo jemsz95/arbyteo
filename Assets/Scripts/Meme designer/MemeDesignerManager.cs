@@ -75,9 +75,11 @@ public class MemeDesignerManager : MonoBehaviour {
 	private Image _refImageTime;
 	private float _fTime;
 	private GameObject _refTutorialText;
+	public delegate void levelEvent();
+	public static event levelEvent MemeDesignerEnd;
 
 	void Awake() {
-		ending += funPassReferenceToManager;
+		MemeDesignerEnd += funPassReferenceToManager;
 		_fTime = 60;
 		_bLevelStart = false;
 		_refTutorialText = GameObject.Find ("Tutorial Box");
@@ -116,7 +118,7 @@ public class MemeDesignerManager : MonoBehaviour {
 		}
 		if (_bLevelStart) {
 			if (_fTime <= 0) {
-				ending();
+				MemeDesignerEnd();
 			} else {
 				_fTime -= Time.deltaTime; 
 			} 
@@ -282,9 +284,6 @@ public class MemeDesignerManager : MonoBehaviour {
 		_refTutorialText.SetActive(false);
 		_bLevelStart = true;
 	}
-
-	public delegate void levelEvent();
-	public static event levelEvent ending;
 
 	void funPassReferenceToManager() {
 		// Aqui pasar datos
