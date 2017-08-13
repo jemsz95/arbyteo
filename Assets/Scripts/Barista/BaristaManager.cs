@@ -10,6 +10,8 @@ public class BaristaManager : MonoBehaviour {
 	private bool _bLevelStart;
 	public delegate void levelEvent();
 	public static levelEvent BaristaEnd;
+	public Text[] refIngredientsText;
+	private int[] _iIngredientsQty = {0, 0, 0, 0, 0};
 
 	void Awake() {
 		_bLevelStart = false;
@@ -43,7 +45,7 @@ public class BaristaManager : MonoBehaviour {
 			if(Input.GetKeyDown(KeyCode.Space)){
 				break; 
 			}else{
-				_refTutorialBox.SetActive (true);  
+				_refTutorialBox.SetActive(true);  
 			}
 			yield return new WaitForSeconds (Time.deltaTime); 
 		}
@@ -59,5 +61,21 @@ public class BaristaManager : MonoBehaviour {
 		} else {
 			//Debug.Log (_fScore); 
 		}
+	}
+
+	public void IncreaseQty(int index) {
+		if(_iIngredientsQty[index] >= 10) {
+			return;
+		}
+		_iIngredientsQty[index]++;
+		refIngredientsText[index].text = "" + _iIngredientsQty[index];
+	}
+
+	public void DecreaseQty(int index) {
+		if(_iIngredientsQty[index] == 0) {
+			return;
+		}
+		_iIngredientsQty[index]--;
+		refIngredientsText[index].text = "" + _iIngredientsQty[index];
 	}
 }
