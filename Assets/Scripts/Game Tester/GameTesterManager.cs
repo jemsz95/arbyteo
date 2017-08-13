@@ -66,11 +66,12 @@ public class GameTesterManager : Singleton<GameTesterManager> {
 			if(Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter)){
 				break; 
 			}else{
-				_refTutorialText.enabled = true; 
+				_refTutorialText.gameObject.active = true; 
 			}
 			yield return new WaitForSeconds (Time.deltaTime); 
 		}
-		_refTutorialText.enabled = false; 
+		_refTutorialText.gameObject.active = false; 
+		_bLevelStart = true; 
 	}
 
 
