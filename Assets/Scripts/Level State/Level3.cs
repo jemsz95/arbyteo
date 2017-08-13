@@ -1,11 +1,13 @@
 using UnityEngine;
+using System.Collections;
 
 public class Level3 : MonoBehaviour, ILevelState {
     private DialogManager _dialogManager;
+    private Animator[] _jobAnimator;
 
     public void funDayStart() {
         _dialogManager = GameObject.FindObjectOfType<DialogManager>();
-        _dialogManager.funStartDialog(1, null);
+        _dialogManager.funStartDialog(2, _funShowJobs);
     }
 
     public void funLunchStart() {
@@ -18,5 +20,24 @@ public class Level3 : MonoBehaviour, ILevelState {
     public void funDayEnd() {
         Destroy(gameObject);
         // Game Over
+    }
+
+    private void _funShowJobs() {
+        var jobs = GameObject.FindGameObjectsWithTag("Jobs");
+        
+        _jobAnimator = new Animator[jobs.Length];
+
+        for(int i = 0; i < jobs.Length; i++) {
+            _jobAnimator[i] = jobs[i].GetComponent<Animator>();
+        }
+
+        StartCoroutine(coShowJobs());
+    }
+
+    private IEnumerator coShowJobs() {
+        foreach(var anim in _jobAnimator) {
+            anim.SetTrigger("Appear");
+            yield return new WaitForSeconds(1f);
+        }
     }
 }

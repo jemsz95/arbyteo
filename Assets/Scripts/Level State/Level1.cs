@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Level1 : MonoBehaviour, ILevelState {
@@ -26,6 +27,10 @@ public class Level1 : MonoBehaviour, ILevelState {
         var jobs = GameObject.FindGameObjectsWithTag("Jobs");
         
         _jobAnimator = new Animator[jobs.Length];
+        
+        foreach(var btnObj in GameObject.FindGameObjectsWithTag("JobButtons")) {
+            btnObj.GetComponent<Button>().interactable = true;
+        }
 
         for(int i = 0; i < jobs.Length; i++) {
             _jobAnimator[i] = jobs[i].GetComponent<Animator>();

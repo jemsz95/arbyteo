@@ -37,6 +37,7 @@ public class GameManager : Singleton<GameManager> {
     }
 
     public void funLoadLevelState(ILevelState lvl) {
+        GameObject.DontDestroyOnLoad((RefLevel as MonoBehaviour).gameObject);
         SceneManager.LoadScene(1); // TODO: Check game scene number
         RefLevel = lvl;
         RefLevel.funDayStart();
@@ -47,7 +48,7 @@ public class GameManager : Singleton<GameManager> {
     private void Start() {
         if(RefLevel == null) {
             RefLevel = new GameObject().AddComponent<Level1>();
-            GameObject.DontDestroyOnLoad((RefLevel as MonoBehaviour).gameObject);
+            DontDestroyOnLoad((RefLevel as MonoBehaviour).gameObject);
         }
 
         RefLevel.funDayStart();
