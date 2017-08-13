@@ -243,7 +243,12 @@ public class MemeDesignerManager : MonoBehaviour {
 		refMemeTopText.text = _sSelectedTopText;
 		refMemeBottomText.text = _sSelectedBottomText;
 		yield return new WaitForSeconds(3);
-		funReset();
+		if(_fTime >= 0) {
+			funReset();
+		}
+		else {
+			_funDisableInteraction();
+		}
 	}
 
 	void funReset() {
