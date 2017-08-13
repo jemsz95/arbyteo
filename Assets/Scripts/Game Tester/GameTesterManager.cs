@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameTesterManager : Singleton<GameTesterManager> {
 
 	private float _fLife, _fTime; 
+	[HideInInspector]
+	public float fLife, fTime; 
 	public delegate void levelEvent (); 
 	public static event levelEvent GameTesterEnd; 
 
@@ -15,16 +17,21 @@ public class GameTesterManager : Singleton<GameTesterManager> {
 	}
 
 	public void funAddTime(float famount){
-		_fTime += famount; 
+		_fTime = Mathf.Clamp (_fTime += famount, 0, 100); 
 	}
 
 	public void funAddLife(float famount){
-		_fLife += famount; 
+		_fLife = Mathf.Clamp (_fLife += famount, 0, 100); 
 	}
 
 	void Update(){
+		fTime = _fTime - (_fTime % 1f);  
+		Debug.Log (fTime); 
 		if (_fLife <= 0 || _fTime <= 0) {
 			GameTesterEnd (); 
+		} else {
+			_fLife--; 
+			_fTime -= Time.deltaTime; 
 		}
 	}
 
