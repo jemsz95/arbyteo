@@ -120,7 +120,7 @@ public class MemeDesignerManager : MonoBehaviour {
 			if (_fTime <= 0) {
 				MemeDesignerEnd();
 			} else {
-				_fTime -= Time.deltaTime; 
+				_fTime -= Time.deltaTime * 2; 
 			} 
 			_refImageTime.fillAmount = _fTime / 60f; 
 		}
@@ -242,7 +242,7 @@ public class MemeDesignerManager : MonoBehaviour {
 		refMemeBottomText.enabled = true;
 		refMemeTopText.text = _sSelectedTopText;
 		refMemeBottomText.text = _sSelectedBottomText;
-		yield return new WaitForSeconds(2);
+		yield return new WaitForSeconds(3);
 		funReset();
 	}
 
