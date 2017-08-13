@@ -806,6 +806,54 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
+--- !u!1001 &326235194
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4663405489634938, guid: 11bbf955f039d42eeace51d0a3ea4877, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -17
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663405489634938, guid: 11bbf955f039d42eeace51d0a3ea4877, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663405489634938, guid: 11bbf955f039d42eeace51d0a3ea4877, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663405489634938, guid: 11bbf955f039d42eeace51d0a3ea4877, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663405489634938, guid: 11bbf955f039d42eeace51d0a3ea4877, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663405489634938, guid: 11bbf955f039d42eeace51d0a3ea4877, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663405489634938, guid: 11bbf955f039d42eeace51d0a3ea4877, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663405489634938, guid: 11bbf955f039d42eeace51d0a3ea4877, type: 2}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 11bbf955f039d42eeace51d0a3ea4877, type: 2}
+  m_IsPrefabParent: 0
+--- !u!114 &326235195 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114504273155142248, guid: 11bbf955f039d42eeace51d0a3ea4877,
+    type: 2}
+  m_PrefabInternal: {fileID: 326235194}
+  m_Script: {fileID: 11500000, guid: ad257f319b7c54577bab63bb429074ba, type: 3}
 --- !u!1001 &334761231
 Prefab:
   m_ObjectHideFlags: 0
@@ -3493,6 +3541,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 334761233}
         m_MethodName: funStart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 326235195}
+        m_MethodName: clicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
