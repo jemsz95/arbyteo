@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameTesterManager : Singleton<GameTesterManager> {
 
-	private float _fLife, _fTime; 
+	private float _fLife, _fTime, _fScore; 
 	private Image _refImgTime, _refImgLife; 
 	public delegate void levelEvent (); 
 	public static event levelEvent GameTesterEnd; 
@@ -18,12 +18,16 @@ public class GameTesterManager : Singleton<GameTesterManager> {
 		_refImgTime = GameObject.Find ("Time Fill").GetComponent<Image> ();
 	}
 
-	public void funAddTime(float famount){
-		_fTime = Mathf.Clamp (_fTime += famount, 0, 100); 
+	public void funAddScore(float famount){
+		if (_fLife > 1) {
+			_fScore += famount; 
+		}
 	}
 
 	public void funAddLife(float famount){
-		_fLife = Mathf.Clamp (_fLife += famount, 0, 100); 
+		if (_fLife > 1) {
+			_fLife = Mathf.Clamp (_fLife += famount, 0, 100); 
+		}
 	}
 
 	void Update(){
@@ -41,7 +45,9 @@ public class GameTesterManager : Singleton<GameTesterManager> {
 		GameManager manager = GameObject.FindObjectOfType<GameManager> (); 
 		if(manager!=null){
 			//give the manager the references; 
+
 		}
+		Debug.Log(_fScore); 
 	}
 
 
