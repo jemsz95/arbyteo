@@ -291,7 +291,7 @@ public class MemeDesignerManager : MonoBehaviour {
 		_funDisableInteraction();
 		GameObject manager = GameObject.Find("Game Manager"); 
 		if (manager != null) {
-			//Manager.Instance.something pass references. 
+			//Manager.Instance.something pasarle es score.  
 		} else {
 			Debug.Log ("Score"); 
 		}
