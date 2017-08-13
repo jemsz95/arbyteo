@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1329,7 +1329,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 11
-  m_Sprite: {fileID: 21300000, guid: 314b32bfd9a6e4d8487c814a279288cd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4b5568552cb074d228b1cddb81cc8607, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1400,7 +1400,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 11
-  m_Sprite: {fileID: 21300000, guid: 314b32bfd9a6e4d8487c814a279288cd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4b5568552cb074d228b1cddb81cc8607, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2241,6 +2241,54 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1001 &723538454
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4663405489634938, guid: 11bbf955f039d42eeace51d0a3ea4877, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -17
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663405489634938, guid: 11bbf955f039d42eeace51d0a3ea4877, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663405489634938, guid: 11bbf955f039d42eeace51d0a3ea4877, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663405489634938, guid: 11bbf955f039d42eeace51d0a3ea4877, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663405489634938, guid: 11bbf955f039d42eeace51d0a3ea4877, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663405489634938, guid: 11bbf955f039d42eeace51d0a3ea4877, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663405489634938, guid: 11bbf955f039d42eeace51d0a3ea4877, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4663405489634938, guid: 11bbf955f039d42eeace51d0a3ea4877, type: 2}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 11bbf955f039d42eeace51d0a3ea4877, type: 2}
+  m_IsPrefabParent: 0
+--- !u!114 &723538455 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114504273155142248, guid: 11bbf955f039d42eeace51d0a3ea4877,
+    type: 2}
+  m_PrefabInternal: {fileID: 723538454}
+  m_Script: {fileID: 11500000, guid: ad257f319b7c54577bab63bb429074ba, type: 3}
 --- !u!1 &726274377
 GameObject:
   m_ObjectHideFlags: 0
@@ -2302,7 +2350,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 11
-  m_Sprite: {fileID: 21300000, guid: 314b32bfd9a6e4d8487c814a279288cd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3908f26aad33a4f9e8f60a70668bfded, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3589,7 +3637,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 11
-  m_Sprite: {fileID: 21300000, guid: 314b32bfd9a6e4d8487c814a279288cd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 23de65f8c1072484ea1e18bde2176d60, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3917,6 +3965,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 723538455}
+        m_MethodName: clicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1583027173
@@ -4084,7 +4143,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 11
-  m_Sprite: {fileID: 21300000, guid: 314b32bfd9a6e4d8487c814a279288cd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8bcd9360c46264d30a17768bd6fe4bd4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

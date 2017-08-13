@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
+using UnityEngine.SceneManagement;
+
 public class Level3 : MonoBehaviour, ILevelState {
     private DialogManager _dialogManager;
     private Animator[] _jobAnimator;
@@ -20,6 +22,7 @@ public class Level3 : MonoBehaviour, ILevelState {
     public void funDayEnd() {
         Destroy(gameObject);
         // Game Over
+        SceneManager.LoadScene(1);
     }
 
     private void _funShowJobs() {

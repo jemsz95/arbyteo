@@ -63,9 +63,11 @@ public class BaristaManager : MonoBehaviour {
 		// Aqui pasar datos
 		_bLevelStart = false;
 		_funDisableInteraction();
-		GameObject manager = GameObject.Find("Game Manager"); 
+		
+		GameManager manager = GameManager.Instance; 
+		
 		if (manager != null) {
-			//Manager.Instance.something pasarle es score.  
+			manager.funFinishMinigame(_iScore);  
 		} else {
 			Debug.Log ("Score");
 		}

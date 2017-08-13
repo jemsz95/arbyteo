@@ -53,10 +53,9 @@ public class GameTesterManager : Singleton<GameTesterManager> {
 	}
 
 	void _funPassReferences(){
-		GameManager manager = GameObject.FindObjectOfType<GameManager> (); 
+		GameManager manager = GameManager.Instance; 
 		if (manager != null) {
-			//give the manager the references; 
-
+			manager.funFinishMinigame((int) _fScore);
 		} else {
 			Debug.Log (_fScore); 
 		}

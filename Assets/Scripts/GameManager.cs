@@ -25,11 +25,10 @@ public class GameManager : Singleton<GameManager> {
     }
 
     public void funFinishMinigame(int score) {
-        SceneManager.LoadScene(1); // TODO: Check game scene number
         RefLevel.funLunchEnd();
         
-        FNewMoney = score;
-        SceneManager.LoadScene(1); //TODO: Check result scene number
+        FCurrentMoney += score;
+        funFinishResults();
     }
 
     public void funFinishResults() {
@@ -38,7 +37,7 @@ public class GameManager : Singleton<GameManager> {
 
     public void funLoadLevelState(ILevelState lvl) {
         GameObject.DontDestroyOnLoad((RefLevel as MonoBehaviour).gameObject);
-        SceneManager.LoadScene(1); // TODO: Check game scene number
+        SceneManager.LoadScene(2); // TODO: Check game scene number
         RefLevel = lvl;
         RefLevel.funDayStart();
     }
@@ -46,8 +45,10 @@ public class GameManager : Singleton<GameManager> {
     protected GameManager() { }
 
     private void Start() {
+        DontDestroyOnLoad(gameObject);
+
         if(RefLevel == null) {
-            RefLevel = new GameObject().AddComponent<Level1>();
+            RefLevel = new GameObject("LevelState").AddComponent<Level1>();
             DontDestroyOnLoad((RefLevel as MonoBehaviour).gameObject);
         }
 
