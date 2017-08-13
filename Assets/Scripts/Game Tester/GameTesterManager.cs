@@ -7,9 +7,11 @@ public class GameTesterManager : Singleton<GameTesterManager> {
 
 	private float _fLife, _fTime, _fScore; 
 	private bool _bLevelStart; 
-	private Image _refImgTime, _refImgLife, _refTutorialText; 
+	private Image _refImgTime, _refImgLife; 
+	private GameObject _refTutorialText; 
 	public delegate void levelEvent (); 
 	public static event levelEvent GameTesterEnd; 
+
 
 	void Awake(){
 		_fLife = 100f; 
@@ -18,7 +20,7 @@ public class GameTesterManager : Singleton<GameTesterManager> {
 		GameTesterEnd += _funPassReferences; 
 		_refImgLife= GameObject.Find ("Life Fill").GetComponent<Image>(); 
 		_refImgTime = GameObject.Find ("Time Fill").GetComponent<Image> ();
-		_refTutorialText = GameObject.Find ("Tutorial Box").GetComponent<Image> (); 
+		_refTutorialText = GameObject.Find ("Tutorial Box");  
 	}
 
 	void Start(){
@@ -63,14 +65,14 @@ public class GameTesterManager : Singleton<GameTesterManager> {
 	IEnumerator Tutorial(){
 		while (true) {
 
-			if(Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter)){
+			if(Input.GetButtonDown("Submit")){
 				break; 
 			}else{
-				_refTutorialText.gameObject.active = true; 
+				_refTutorialText.SetActive (true);  
 			}
 			yield return new WaitForSeconds (Time.deltaTime); 
 		}
-		_refTutorialText.gameObject.active = false; 
+		_refTutorialText.SetActive (false); 
 		_bLevelStart = true; 
 	}
 
