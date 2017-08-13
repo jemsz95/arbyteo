@@ -71,11 +71,20 @@ public class MemeDesignerManager : MonoBehaviour {
 	int[] iSelectedIndexes = {0, 0, 0, 0, 0};
 
 	Dictionary<string, bool> Combinations;
+	public Image palomitaMeme, palomitaTopText, palomitaBottomText;
+
+	void Awake() {
+		ending += funPassReferenceToManager;
+	}
 
 	// Use this for initialization
 	void Start () {
+		StartCoroutine(coTutorial());
 		MemeImage.GetComponent<Image>().overrideSprite = null;
 		MemeImage.GetComponent<Image>().enabled = false;
+		palomitaMeme.enabled = false;
+		palomitaTopText.enabled = false;
+		palomitaBottomText.enabled = false;
 		MemeTopText.text = "";
 		MemeTopText.enabled = false;
 		MemeBottomText.text = "";
@@ -177,6 +186,8 @@ public class MemeDesignerManager : MonoBehaviour {
 		for(int i = 0; i < 5; i++) {
 			if(i == iButtonIndex) {
 				selectedImage = Memes[iSelectedIndexes[i]];
+				palomitaMeme.GetComponent<RectTransform>().position = new Vector3(Buttons[i].transform.position.x + 50, Buttons[i].transform.position.y, 0);
+				palomitaMeme.enabled = true;
 			}
 			Buttons[i].GetComponent<Button>().interactable = false;
 		}
@@ -188,6 +199,8 @@ public class MemeDesignerManager : MonoBehaviour {
 			TopTexts[i].transform.parent.GetComponent<Button>().interactable = false;
 			if(i == iTopTextIndex) {
 				sSelectedTopText = TopTexts[i].text;
+				palomitaTopText.GetComponent<RectTransform>().position = new Vector3(TopTexts[i].transform.position.x + 100, TopTexts[i].transform.position.y, 0);
+				palomitaTopText.enabled = true;
 			}
 		}
 		bTopTextSelected = true;
@@ -198,6 +211,8 @@ public class MemeDesignerManager : MonoBehaviour {
 			BottomTexts[i].transform.parent.GetComponent<Button>().interactable = false;
 			if(i == iBottomTextIndex) {
 				sSelectedBottomText = BottomTexts[i].text;
+				palomitaBottomText.GetComponent<RectTransform>().position = new Vector3(BottomTexts[i].transform.position.x + 100, BottomTexts[i].transform.position.y, 0);
+				palomitaBottomText.enabled = true;
 			}
 		}
 		bBottomTextSelected = true;
@@ -232,8 +247,25 @@ public class MemeDesignerManager : MonoBehaviour {
 		bImageSelected = false;
 		bTopTextSelected = false;
 		bBottomTextSelected = false;
+		palomitaMeme.enabled = false;
+		palomitaTopText.enabled = false;
+		palomitaBottomText.enabled = false;
 		funSelectImages();
 		funSelectTopTexts();
 		funSelectBottomTexts();
+	}
+
+	IEnumerator coTutorial() {
+		// Insert dialog text
+		while(!Input.GetKeyDown(KeyCode.Space)) {
+			yield return new WaitForSeconds(Time.fixedDeltaTime);
+		}
+	}
+
+	public delegate void levelEvent();
+	public static event levelEvent ending;
+
+	void funPassReferenceToManager() {
+		// Aqui pasar datos
 	}
 }
