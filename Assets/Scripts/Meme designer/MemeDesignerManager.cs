@@ -68,9 +68,11 @@ public class MemeDesignerManager : MonoBehaviour {
 	bool bImageSelected, bTopTextSelected, bBottomTextSelected;
 	public Image MemeImage;
 	public Text MemeTopText, MemeBottomText;
+	int[] iSelectedIndexes = {0, 0, 0, 0, 0};
 
 	// Use this for initialization
 	void Start () {
+		MemeImage.GetComponent<Image>().overrideSprite = null;
 		MemeImage.GetComponent<Image>().enabled = false;
 		MemeTopText.text = "";
 		MemeBottomText.text = "";
@@ -108,6 +110,7 @@ public class MemeDesignerManager : MonoBehaviour {
 			// Move selected image to the end of the pool
 			Sprite temp = Memes[iImagePoolSize - 1];
 			Memes[iImagePoolSize - 1] = Memes[index];
+			iSelectedIndexes[i] = iImagePoolSize - 1;
 			// Swap last to be in pool
 			Memes[index] = temp;
 			// Decrease pool to erase duplicates
@@ -163,11 +166,11 @@ public class MemeDesignerManager : MonoBehaviour {
 
 	public void funDisableImages(int iButtonIndex) {
 		for(int i = 0; i < 5; i++) {
-			Buttons[i].GetComponent<Button>().interactable = false;
-			Buttons[i].GetComponent<Button>().enabled = false;
 			if(i == iButtonIndex) {
-				selectedImage = Buttons[i].GetComponent<Image>().sprite;
+				selectedImage = Memes[iSelectedIndexes[i]];
 			}
+			Buttons[i].GetComponent<Button>().interactable = false;
+			// Buttons[i].GetComponent<Button>().enabled = false;
 		}
 		bImageSelected = true;
 	}
@@ -195,10 +198,10 @@ public class MemeDesignerManager : MonoBehaviour {
 	}
 
 	void funShowMeme() {
+		MemeImage.GetComponent<Image>().enabled = true;
 		MemeImage.GetComponent<Image>().overrideSprite = selectedImage;
 		MemeTopText.text = sSelectedTopText;
 		MemeBottomText.text = sSelectedBottomText;
-		
 	}
 
 }
