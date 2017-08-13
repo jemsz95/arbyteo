@@ -63,7 +63,7 @@ public class GameTesterManager : Singleton<GameTesterManager> {
 	IEnumerator Tutorial(){
 		while (true) {
 
-			if(Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter)){
+			if(Input.GetButtonDown("Submit")){
 				break; 
 			}else{
 				_refTutorialText.gameObject.active = true; 
