@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GameTesterManager : Singleton<GameTesterManager> {
 
 	private float _fLife, _fTime; 
-	private Text _refTextTime, _refTextLife; 
+	private Image _refImgTime, _refImgLife; 
 	public delegate void levelEvent (); 
 	public static event levelEvent GameTesterEnd; 
 
@@ -14,8 +14,8 @@ public class GameTesterManager : Singleton<GameTesterManager> {
 		_fLife = 100f; 
 		_fTime = 60f; 
 		GameTesterEnd += _funPassReferences; 
-		_refTextTime = GameObject.Find ("Health Button"); 
-		_refTextTime = GameObject.Find ("Send Button"); 
+		_refImgLife= GameObject.Find ("Life Fill").GetComponent<Image>(); 
+		_refImgTime = GameObject.Find ("Time Fill").GetComponent<Image> ();
 	}
 
 	public void funAddTime(float famount){
@@ -33,8 +33,8 @@ public class GameTesterManager : Singleton<GameTesterManager> {
 			_fLife -= Time.deltaTime; 
 			_fTime -= Time.deltaTime; 
 		}
-		_refTextLife = _fLife; 
-		_refTextTime = _fTime; 
+		_refImgLife.fillAmount = _fLife; 
+		_refImgTime.fillAmount = _fTime; 
 	}
 
 	void _funPassReferences(){
