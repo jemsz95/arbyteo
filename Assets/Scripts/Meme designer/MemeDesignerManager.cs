@@ -6,15 +6,15 @@ using UnityEngine.UI;
 public class MemeDesignerManager : MonoBehaviour {
 
 	public int IMAGE_QUANTIY, TOP_TEXTS, BOTTOM_TEXTS;
-	public Sprite[] Memes;
+	public Sprite[] refMemes;
 
-	public GameObject[] Buttons;
+	public GameObject[] refButtons;
 
-	public Text[] TopTexts;
+	public Text[] refTopTexts;
 
-	public Text[] BottomTexts;
+	public Text[] refBottomTexts;
 
-	string[] sTopTexts = {
+	string[] _sTopTexts = {
 		"WINS A HOLIDAY",
 		"IF AN ILLEGAL IMMIGRANT FOUGHT A CHILD MOLESTOR",
 		"VISITS THE GAZA STRIP",
@@ -37,7 +37,7 @@ public class MemeDesignerManager : MonoBehaviour {
 		"WHEN YOU TRY TO TAKE A SELFIE WITH ONE HAND"
 	};
 
-	string[] sBottomTexts = {
+	string[] _sBottomTexts = {
 		"GUAM",
 		"WOULD IT BE ALIENS VS PREDATORS?",
 		"BECAUSE HE THINKS IT'S A STRIP CLUB",
@@ -61,17 +61,19 @@ public class MemeDesignerManager : MonoBehaviour {
 	};
 
 	// Size of pools changes to prevent duplicates
-	int iImagePoolSize, iTopTextPoolSize, iBottomTextPoolSize;
-	Sprite selectedImage;
-	string sSelectedTopText, sSelectedBottomText;
+	int _iImagePoolSize, _iTopTextPoolSize, _iBottomTextPoolSize;
+	Sprite _selectedImage;
+	string _sSelectedTopText, _sSelectedBottomText;
 
-	bool bImageSelected, bTopTextSelected, bBottomTextSelected;
-	public Image MemeImage;
-	public Text MemeTopText, MemeBottomText;
-	int[] iSelectedIndexes = {0, 0, 0, 0, 0};
+	bool _bImageSelected, _bTopTextSelected, _bBottomTextSelected;
+	public Image refMemeImage;
+	public Text refMemeTopText, refMemeBottomText;
+	int[] _iSelectedIndexes = {0, 0, 0, 0, 0};
 
 	Dictionary<string, bool> Combinations;
-	public Image palomitaMeme, palomitaTopText, palomitaBottomText;
+	public Image refPalomitaMeme, refPalomitaTopText, refPalomitaBottomText;
+	private Image _refImage;
+	private float _fTime;
 
 	void Awake() {
 		ending += funPassReferenceToManager;
@@ -80,175 +82,175 @@ public class MemeDesignerManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		StartCoroutine(coTutorial());
-		MemeImage.GetComponent<Image>().overrideSprite = null;
-		MemeImage.GetComponent<Image>().enabled = false;
-		palomitaMeme.enabled = false;
-		palomitaTopText.enabled = false;
-		palomitaBottomText.enabled = false;
-		MemeTopText.text = "";
-		MemeTopText.enabled = false;
-		MemeBottomText.text = "";
-		MemeBottomText.enabled = false;
-		iImagePoolSize = IMAGE_QUANTIY;
-		iTopTextPoolSize = TOP_TEXTS;
-		iBottomTextPoolSize = BOTTOM_TEXTS;
+		refMemeImage.GetComponent<Image>().overrideSprite = null;
+		refMemeImage.GetComponent<Image>().enabled = false;
+		refPalomitaMeme.enabled = false;
+		refPalomitaTopText.enabled = false;
+		refPalomitaBottomText.enabled = false;
+		refMemeTopText.text = "";
+		refMemeTopText.enabled = false;
+		refMemeBottomText.text = "";
+		refMemeBottomText.enabled = false;
+		_iImagePoolSize = IMAGE_QUANTIY;
+		_iTopTextPoolSize = TOP_TEXTS;
+		_iBottomTextPoolSize = BOTTOM_TEXTS;
 		funSelectImages();
 		funSelectTopTexts();
 		funSelectBottomTexts();
-		bImageSelected = false;
-		bTopTextSelected = false;
-		bBottomTextSelected = false;
+		_bImageSelected = false;
+		_bTopTextSelected = false;
+		_bBottomTextSelected = false;
 		Combinations = new Dictionary<string, bool>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(bImageSelected && bTopTextSelected && bBottomTextSelected) {
+		if(_bImageSelected && _bTopTextSelected && _bBottomTextSelected) {
 			StartCoroutine(coShowMeme());
-			bImageSelected = false;
+			_bImageSelected = false;
 		}
 	}
 
 	void funSelectImages() {
 		int index;
 		// Reset pool size to pick images
-		if(iImagePoolSize == 0) {
-			iImagePoolSize = IMAGE_QUANTIY;
+		if(_iImagePoolSize == 0) {
+			_iImagePoolSize = IMAGE_QUANTIY;
 		}
 		
-		// Select 5 indexes of images from Memes array
+		// Select 5 indexes of images from refMemes array
 		for(int i = 0; i < 5; i++) {
 			// Obtain random index
-			index = Random.Range(0, iImagePoolSize);
+			index = Random.Range(0, _iImagePoolSize);
 			// Assign image to button
-			Buttons[i].GetComponent<Button>().interactable = true;
-			Buttons[i].GetComponent<Image>().overrideSprite = Memes[index];
+			refButtons[i].GetComponent<Button>().interactable = true;
+			refButtons[i].GetComponent<Image>().overrideSprite = refMemes[index];
 			// Move selected image to the end of the pool
-			Sprite temp = Memes[iImagePoolSize - 1];
-			Memes[iImagePoolSize - 1] = Memes[index];
-			iSelectedIndexes[i] = iImagePoolSize - 1;
+			Sprite temp = refMemes[_iImagePoolSize - 1];
+			refMemes[_iImagePoolSize - 1] = refMemes[index];
+			_iSelectedIndexes[i] = _iImagePoolSize - 1;
 			// Swap last to be in pool
-			Memes[index] = temp;
+			refMemes[index] = temp;
 			// Decrease pool to erase duplicates
-			iImagePoolSize--;
+			_iImagePoolSize--;
 		}
 	}
 
 	void funSelectTopTexts() {
 		int index;
 		// Reset pool size to pick images
-		if(iTopTextPoolSize == 0) {
-			iTopTextPoolSize = TOP_TEXTS;
+		if(_iTopTextPoolSize == 0) {
+			_iTopTextPoolSize = TOP_TEXTS;
 		}
 		
 		// Select 5 indexes of top texts from top texts array
 		for(int i = 0; i < 5; i++) {
 			// Obtain random index
-			index = Random.Range(0, iTopTextPoolSize);
+			index = Random.Range(0, _iTopTextPoolSize);
 			// Assign text
-			TopTexts[i].text = sTopTexts[index];
-			TopTexts[i].transform.parent.GetComponent<Button>().interactable = true;
+			refTopTexts[i].text = _sTopTexts[index];
+			refTopTexts[i].transform.parent.GetComponent<Button>().interactable = true;
 			// Move selected text to the end of the pool
-			string temp = sTopTexts[iTopTextPoolSize - 1];
-			sTopTexts[iTopTextPoolSize - 1] = sTopTexts[index];
+			string temp = _sTopTexts[_iTopTextPoolSize - 1];
+			_sTopTexts[_iTopTextPoolSize - 1] = _sTopTexts[index];
 			// Swap last to be in pool
-			sTopTexts[index] = temp;
+			_sTopTexts[index] = temp;
 			// Decrease pool to erase duplicates
-			iTopTextPoolSize--;
+			_iTopTextPoolSize--;
 		}
 	}
 
 	void funSelectBottomTexts() {
 		int index;
 		// Reset pool size to pick images
-		if(iBottomTextPoolSize == 0) {
-			iBottomTextPoolSize = BOTTOM_TEXTS;
+		if(_iBottomTextPoolSize == 0) {
+			_iBottomTextPoolSize = BOTTOM_TEXTS;
 		}
 		
 		// Select 5 indexes of top texts from top texts array
 		for(int i = 0; i < 5; i++) {
 			// Obtain random index
-			index = Random.Range(0, iBottomTextPoolSize);
+			index = Random.Range(0, _iBottomTextPoolSize);
 			// Assign text
-			BottomTexts[i].text = sBottomTexts[index];
-			BottomTexts[i].transform.parent.GetComponent<Button>().interactable = true;
+			refBottomTexts[i].text = _sBottomTexts[index];
+			refBottomTexts[i].transform.parent.GetComponent<Button>().interactable = true;
 			// Move selected text to the end of the pool
-			string temp = sBottomTexts[iBottomTextPoolSize - 1];
-			sBottomTexts[iBottomTextPoolSize - 1] = sBottomTexts[index];
+			string temp = _sBottomTexts[_iBottomTextPoolSize - 1];
+			_sBottomTexts[_iBottomTextPoolSize - 1] = _sBottomTexts[index];
 			// Swap last to be in pool
-			sBottomTexts[index] = temp;
+			_sBottomTexts[index] = temp;
 			// Decrease pool to erase duplicates
-			iBottomTextPoolSize--;
+			_iBottomTextPoolSize--;
 		}
 	}
 
 	public void funDisableImages(int iButtonIndex) {
 		for(int i = 0; i < 5; i++) {
 			if(i == iButtonIndex) {
-				selectedImage = Memes[iSelectedIndexes[i]];
-				palomitaMeme.GetComponent<RectTransform>().position = new Vector3(Buttons[i].transform.position.x + 50, Buttons[i].transform.position.y, 0);
-				palomitaMeme.enabled = true;
+				_selectedImage = refMemes[_iSelectedIndexes[i]];
+				refPalomitaMeme.GetComponent<RectTransform>().position = new Vector3(refButtons[i].transform.position.x + 50, refButtons[i].transform.position.y, 0);
+				refPalomitaMeme.enabled = true;
 			}
-			Buttons[i].GetComponent<Button>().interactable = false;
+			refButtons[i].GetComponent<Button>().interactable = false;
 		}
-		bImageSelected = true;
+		_bImageSelected = true;
 	}
 
 	public void funDisableTopTexts(int iTopTextIndex) {
 		for(int i = 0; i < 5; i++) {
-			TopTexts[i].transform.parent.GetComponent<Button>().interactable = false;
+			refTopTexts[i].transform.parent.GetComponent<Button>().interactable = false;
 			if(i == iTopTextIndex) {
-				sSelectedTopText = TopTexts[i].text;
-				palomitaTopText.GetComponent<RectTransform>().position = new Vector3(TopTexts[i].transform.position.x + 100, TopTexts[i].transform.position.y, 0);
-				palomitaTopText.enabled = true;
+				_sSelectedTopText = refTopTexts[i].text;
+				refPalomitaTopText.GetComponent<RectTransform>().position = new Vector3(refTopTexts[i].transform.position.x + 100, refTopTexts[i].transform.position.y, 0);
+				refPalomitaTopText.enabled = true;
 			}
 		}
-		bTopTextSelected = true;
+		_bTopTextSelected = true;
 	}
 
 	public void funDisableBottomTexts(int iBottomTextIndex) {
 		for(int i = 0; i < 5; i++) {
-			BottomTexts[i].transform.parent.GetComponent<Button>().interactable = false;
+			refBottomTexts[i].transform.parent.GetComponent<Button>().interactable = false;
 			if(i == iBottomTextIndex) {
-				sSelectedBottomText = BottomTexts[i].text;
-				palomitaBottomText.GetComponent<RectTransform>().position = new Vector3(BottomTexts[i].transform.position.x + 100, BottomTexts[i].transform.position.y, 0);
-				palomitaBottomText.enabled = true;
+				_sSelectedBottomText = refBottomTexts[i].text;
+				refPalomitaBottomText.GetComponent<RectTransform>().position = new Vector3(refBottomTexts[i].transform.position.x + 100, refBottomTexts[i].transform.position.y, 0);
+				refPalomitaBottomText.enabled = true;
 			}
 		}
-		bBottomTextSelected = true;
+		_bBottomTextSelected = true;
 	}
 
 	IEnumerator coShowMeme() {
-		MemeImage.GetComponent<Image>().enabled = true;
-		MemeImage.GetComponent<Image>().overrideSprite = selectedImage;
-		MemeTopText.enabled = true;
-		MemeBottomText.enabled = true;
-		MemeTopText.text = sSelectedTopText;
-		MemeBottomText.text = sSelectedBottomText;
+		refMemeImage.GetComponent<Image>().enabled = true;
+		refMemeImage.GetComponent<Image>().overrideSprite = _selectedImage;
+		refMemeTopText.enabled = true;
+		refMemeBottomText.enabled = true;
+		refMemeTopText.text = _sSelectedTopText;
+		refMemeBottomText.text = _sSelectedBottomText;
 		yield return new WaitForSeconds(2);
 		funReset();
 	}
 
 	void funReset() {
-		string keyName = MemeImage.GetComponent<Image>().name + MemeTopText.text + MemeBottomText.text;
+		string keyName = refMemeImage.GetComponent<Image>().name + refMemeTopText.text + refMemeBottomText.text;
 		if(!Combinations.ContainsKey(keyName)) {
 			// Add points in using game manager
 			Combinations.Add(keyName, true);
 		}
 		else {
-			// Low score
+			// Lower score
 		}
-		MemeImage.GetComponent<Image>().enabled = false;
-		MemeTopText.text = "";
-		MemeBottomText.text = "";
-		MemeTopText.enabled = false;
-		MemeBottomText.enabled = false;
-		bImageSelected = false;
-		bTopTextSelected = false;
-		bBottomTextSelected = false;
-		palomitaMeme.enabled = false;
-		palomitaTopText.enabled = false;
-		palomitaBottomText.enabled = false;
+		refMemeImage.GetComponent<Image>().enabled = false;
+		refMemeTopText.text = "";
+		refMemeBottomText.text = "";
+		refMemeTopText.enabled = false;
+		refMemeBottomText.enabled = false;
+		_bImageSelected = false;
+		_bTopTextSelected = false;
+		_bBottomTextSelected = false;
+		refPalomitaMeme.enabled = false;
+		refPalomitaTopText.enabled = false;
+		refPalomitaBottomText.enabled = false;
 		funSelectImages();
 		funSelectTopTexts();
 		funSelectBottomTexts();
