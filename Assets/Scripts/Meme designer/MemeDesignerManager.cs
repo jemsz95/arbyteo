@@ -65,18 +65,23 @@ public class MemeDesignerManager : MonoBehaviour {
 	Sprite _selectedImage;
 	string _sSelectedTopText, _sSelectedBottomText;
 
-	bool _bImageSelected, _bTopTextSelected, _bBottomTextSelected;
+	bool _bImageSelected, _bTopTextSelected, _bBottomTextSelected, _bLevelStart;
 	public Image refMemeImage;
 	public Text refMemeTopText, refMemeBottomText;
 	int[] _iSelectedIndexes = {0, 0, 0, 0, 0};
 
 	Dictionary<string, bool> Combinations;
 	public Image refPalomitaMeme, refPalomitaTopText, refPalomitaBottomText;
-	private Image _refImage;
+	private Image _refImageTime;
 	private float _fTime;
+	private GameObject _refTutorialText;
 
 	void Awake() {
 		ending += funPassReferenceToManager;
+		_fTime = 60;
+		_bLevelStart = false;
+		_refTutorialText = GameObject.Find ("Tutorial Box");
+		_refImageTime = GameObject.Find("Time Fill").GetComponent<Image>();
 	}
 
 	// Use this for initialization
@@ -108,6 +113,14 @@ public class MemeDesignerManager : MonoBehaviour {
 		if(_bImageSelected && _bTopTextSelected && _bBottomTextSelected) {
 			StartCoroutine(coShowMeme());
 			_bImageSelected = false;
+		}
+		if (_bLevelStart) {
+			if (_fTime <= 0) {
+				ending();
+			} else {
+				_fTime -= Time.deltaTime; 
+			} 
+			_refImageTime.fillAmount = _fTime / 60f; 
 		}
 	}
 
@@ -257,10 +270,17 @@ public class MemeDesignerManager : MonoBehaviour {
 	}
 
 	IEnumerator coTutorial() {
-		// Insert dialog text
-		while(!Input.GetKeyDown(KeyCode.Space)) {
-			yield return new WaitForSeconds(Time.fixedDeltaTime);
+		while (true) {
+			if(Input.GetButtonDown("Submit")){
+				break; 
+			}
+			else {
+				_refTutorialText.SetActive(true);  
+			}
+			yield return new WaitForSeconds (Time.deltaTime); 
 		}
+		_refTutorialText.SetActive(false);
+		_bLevelStart = true;
 	}
 
 	public delegate void levelEvent();
