@@ -61,7 +61,7 @@ public class MemeDesignerManager : MonoBehaviour {
 	};
 
 	// Size of pools changes to prevent duplicates
-	int _iImagePoolSize, _iTopTextPoolSize, _iBottomTextPoolSize;
+	int _iImagePoolSize, _iTopTextPoolSize, _iBottomTextPoolSize, _iScore;
 	Sprite _selectedImage;
 	string _sSelectedTopText, _sSelectedBottomText;
 
@@ -79,6 +79,7 @@ public class MemeDesignerManager : MonoBehaviour {
 	public static event levelEvent MemeDesignerEnd;
 
 	void Awake() {
+		_iScore = 0;
 		MemeDesignerEnd += funPassReferenceToManager;
 		_fTime = 60;
 		_bLevelStart = false;
@@ -112,7 +113,7 @@ public class MemeDesignerManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(_bImageSelected && _bTopTextSelected && _bBottomTextSelected) {
+		if(_bImageSelected && _bTopTextSelected && _bBottomTextSelected && _bLevelStart) {
 			StartCoroutine(coShowMeme());
 			_bImageSelected = false;
 		}
@@ -120,7 +121,7 @@ public class MemeDesignerManager : MonoBehaviour {
 			if (_fTime <= 0) {
 				MemeDesignerEnd();
 			} else {
-				_fTime -= Time.deltaTime; 
+				_fTime -= Time.deltaTime * 1.5f; 
 			} 
 			_refImageTime.fillAmount = _fTime / 60f; 
 		}
@@ -242,8 +243,13 @@ public class MemeDesignerManager : MonoBehaviour {
 		refMemeBottomText.enabled = true;
 		refMemeTopText.text = _sSelectedTopText;
 		refMemeBottomText.text = _sSelectedBottomText;
-		yield return new WaitForSeconds(2);
-		funReset();
+		yield return new WaitForSeconds(3);
+		if(_fTime >= 0) {
+			funReset();
+		}
+		else {
+			_funDisableInteraction();
+		}
 	}
 
 	void funReset() {
@@ -251,9 +257,10 @@ public class MemeDesignerManager : MonoBehaviour {
 		if(!Combinations.ContainsKey(keyName)) {
 			// Add points in using game manager
 			Combinations.Add(keyName, true);
+			_iScore += 20;
 		}
 		else {
-			// Lower score
+			_iScore -= 1000;
 		}
 		refMemeImage.GetComponent<Image>().enabled = false;
 		refMemeTopText.text = "";
@@ -287,5 +294,22 @@ public class MemeDesignerManager : MonoBehaviour {
 
 	void funPassReferenceToManager() {
 		// Aqui pasar datos
+		_bLevelStart = false;
+		_funDisableInteraction();
+		GameObject manager = GameObject.Find("Game Manager"); 
+		if (manager != null) {
+			//Manager.Instance.something pasarle es score.  
+		} else {
+			Debug.Log ("Score"); 
+		}
+
+	}
+
+	void _funDisableInteraction() {
+		for(int i = 0; i < 5; i++) {
+			refButtons[i].GetComponent<Button>().interactable = false;
+			refTopTexts[i].GetComponentInParent<Button>().interactable = false;
+			refBottomTexts[i].GetComponentInParent<Button>().interactable = false;
+		}
 	}
 }
