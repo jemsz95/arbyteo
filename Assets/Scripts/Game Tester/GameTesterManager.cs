@@ -30,11 +30,11 @@ public class GameTesterManager : Singleton<GameTesterManager> {
 		if (_fLife <= 0 || _fTime <= 0) {
 			GameTesterEnd (); 
 		} else {
-			_fLife -= Time.deltaTime; 
+			_fLife -= Time.deltaTime * 8; 
 			_fTime -= Time.deltaTime; 
 		}
-		_refImgLife.fillAmount = _fLife; 
-		_refImgTime.fillAmount = _fTime; 
+		_refImgLife.fillAmount = _fLife / 100f; 
+		_refImgTime.fillAmount = _fTime / 60f;  
 	}
 
 	void _funPassReferences(){

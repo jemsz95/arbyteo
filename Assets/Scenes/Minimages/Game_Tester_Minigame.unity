@@ -748,7 +748,7 @@ GameObject:
   - component: {fileID: 788847916}
   - component: {fileID: 788847915}
   m_Layer: 5
-  m_Name: Health Fill
+  m_Name: Life Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
