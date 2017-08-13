@@ -75,7 +75,9 @@ public class MemeDesignerManager : MonoBehaviour {
 		MemeImage.GetComponent<Image>().overrideSprite = null;
 		MemeImage.GetComponent<Image>().enabled = false;
 		MemeTopText.text = "";
+		MemeTopText.enabled = false;
 		MemeBottomText.text = "";
+		MemeBottomText.enabled = false;
 		iImagePoolSize = IMAGE_QUANTIY;
 		iTopTextPoolSize = TOP_TEXTS;
 		iBottomTextPoolSize = BOTTOM_TEXTS;
@@ -90,7 +92,8 @@ public class MemeDesignerManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(bImageSelected && bTopTextSelected && bBottomTextSelected) {
-			funShowMeme();
+			StartCoroutine(coShowMeme());
+			bImageSelected = false;
 		}
 	}
 
@@ -106,6 +109,7 @@ public class MemeDesignerManager : MonoBehaviour {
 			// Obtain random index
 			index = Random.Range(0, iImagePoolSize);
 			// Assign image to button
+			Buttons[i].GetComponent<Button>().interactable = true;
 			Buttons[i].GetComponent<Image>().overrideSprite = Memes[index];
 			// Move selected image to the end of the pool
 			Sprite temp = Memes[iImagePoolSize - 1];
@@ -131,6 +135,7 @@ public class MemeDesignerManager : MonoBehaviour {
 			index = Random.Range(0, iTopTextPoolSize);
 			// Assign image to button
 			TopTexts[i].text = sTopTexts[index];
+			TopTexts[i].transform.parent.GetComponent<Button>().interactable = true;
 			// Move selected image to the end of the pool
 			string temp = sTopTexts[iTopTextPoolSize - 1];
 			sTopTexts[iTopTextPoolSize - 1] = sTopTexts[index];
@@ -154,6 +159,7 @@ public class MemeDesignerManager : MonoBehaviour {
 			index = Random.Range(0, iBottomTextPoolSize);
 			// Assign image to button
 			BottomTexts[i].text = sBottomTexts[index];
+			BottomTexts[i].transform.parent.GetComponent<Button>().interactable = true;
 			// Move selected image to the end of the pool
 			string temp = sBottomTexts[iBottomTextPoolSize - 1];
 			sBottomTexts[iBottomTextPoolSize - 1] = sBottomTexts[index];
@@ -170,7 +176,6 @@ public class MemeDesignerManager : MonoBehaviour {
 				selectedImage = Memes[iSelectedIndexes[i]];
 			}
 			Buttons[i].GetComponent<Button>().interactable = false;
-			// Buttons[i].GetComponent<Button>().enabled = false;
 		}
 		bImageSelected = true;
 	}
@@ -178,7 +183,6 @@ public class MemeDesignerManager : MonoBehaviour {
 	public void funDisableTopTexts(int iTopTextIndex) {
 		for(int i = 0; i < 5; i++) {
 			TopTexts[i].transform.parent.GetComponent<Button>().interactable = false;
-			TopTexts[i].transform.parent.GetComponent<Button>().enabled = false;
 			if(i == iTopTextIndex) {
 				sSelectedTopText = TopTexts[i].text;
 			}
@@ -189,7 +193,6 @@ public class MemeDesignerManager : MonoBehaviour {
 	public void funDisableBottomTexts(int iBottomTextIndex) {
 		for(int i = 0; i < 5; i++) {
 			BottomTexts[i].transform.parent.GetComponent<Button>().interactable = false;
-			BottomTexts[i].transform.parent.GetComponent<Button>().enabled = false;
 			if(i == iBottomTextIndex) {
 				sSelectedBottomText = BottomTexts[i].text;
 			}
@@ -197,11 +200,29 @@ public class MemeDesignerManager : MonoBehaviour {
 		bBottomTextSelected = true;
 	}
 
-	void funShowMeme() {
+	IEnumerator coShowMeme() {
 		MemeImage.GetComponent<Image>().enabled = true;
 		MemeImage.GetComponent<Image>().overrideSprite = selectedImage;
+		MemeTopText.enabled = true;
+		MemeBottomText.enabled = true;
 		MemeTopText.text = sSelectedTopText;
 		MemeBottomText.text = sSelectedBottomText;
+		yield return new WaitForSeconds(2);
+		funReset();
+	}
+
+	void funReset() {
+		MemeImage.GetComponent<Image>().enabled = false;
+		MemeTopText.text = "";
+		MemeBottomText.text = "";
+		MemeTopText.enabled = false;
+		MemeBottomText.enabled = false;
+		bImageSelected = false;
+		bTopTextSelected = false;
+		bBottomTextSelected = false;
+		funSelectImages();
+		funSelectTopTexts();
+		funSelectBottomTexts();
 	}
 
 }
