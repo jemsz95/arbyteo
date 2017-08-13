@@ -233,11 +233,10 @@ public class MemeDesignerManager : MonoBehaviour {
 		string keyName = MemeImage.GetComponent<Image>().name + MemeTopText.text + MemeBottomText.text;
 		if(!Combinations.ContainsKey(keyName)) {
 			// Add points in using game manager
-			Debug.Log("Add");
 			Combinations.Add(keyName, true);
 		}
 		else {
-			Debug.Log("Less");
+			// Low score
 		}
 		MemeImage.GetComponent<Image>().enabled = false;
 		MemeTopText.text = "";
