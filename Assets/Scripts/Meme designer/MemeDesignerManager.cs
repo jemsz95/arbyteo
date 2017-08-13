@@ -5,55 +5,224 @@ using UnityEngine;
 
 public class MemeDesignerManager : MonoBehaviour {
 
-	public Sprite[] memes;
+	public int IMAGE_QUANTIY, TOP_TEXTS, BOTTOM_TEXTS;
+	public Sprite[] Memes;
 
-	public GameObject[] buttons;
+	public GameObject[] Buttons;
 
-	int iPoolSize;
-	public int IMAGE_QUANTIY;
+	public Text[] TopTexts;
+
+	public Text[] BottomTexts;
+
+	string[] sTopTexts = {
+		"WINS A HOLIDAY",
+		"IF AN ILLEGAL IMMIGRANT FOUGHT A CHILD MOLESTOR",
+		"VISITS THE GAZA STRIP",
+		"THIS IS WHERE I'D PUT FAITH IN SOCIETY",
+		"HE'S GONNA NUKE THE U.S.",
+		"EVER TRIED TO EAT A CLOCK?",
+		"I USED TO BE ADDICTED TO SOAP",
+		"NICE LOOKING GIRL WAVED AT ME EARLIER TODAY",
+		"HOW I FELL ABOUT TODAY'S NEWS",
+		"ONE DOES NOT SIMPLY WATCH THE EMOJI MOVIE",
+		"WHICH CAME FIRST, CHICKEN OR EGG?",
+		"I BROKE MY VACUUM CLEANER",
+		"IF YOU CAN STOP TEXTING AND DRIVING",
+		"GETS FIRED FROM HIS FIRST JOB",
+		"FORGET SANTA",
+		"TO BE OR NOT TO BE",
+		"REMEBER WHEN MTV DIDN'T SUCK",
+		"I DON'T ALWAYS MAKE A MEME",
+		"EVERY TIME I SEE YOU",
+		"WHEN YOU TRY TO TAKE A SELFIE WITH ONE HAND"
+	};
+
+	string[] sBottomTexts = {
+		"GUAM",
+		"WOULD IT BE ALIENS VS PREDATORS?",
+		"BECAUSE HE THINKS IT'S A STRIP CLUB",
+		"IF I HAD ANY",
+		"SEE, NOBODY CARES",
+		"IT'S TIME CONSUMING",
+		"BUT I'M CLEAN NOW",
+		"I LET MY PUPPY PEE ON IT",
+		"CHOKES ON IT AND DIES",
+		"WITHOUT LOSING ALL FAITH IN HUMANITY",
+		"ALIENS!",
+		"FOR ONCE I OWN SOMETHING THAT DOESN'T SUCK",
+		"THAT WOULD BE GREAT",
+		"BUT WHEN I DO, IT'S LIT",
+		"MY MIDDLE FINGER GETS A BONER",
+		"BUT THAT'S NONE OF MY BUSINESS",
+		"A FLY CAN'T BIRD",
+		"AND PUSH IT OFF A CLIFF",
+		"IN NORTH KOREA",
+		"NOW I CAN ENJOY MY CUP OF COVFEFE"
+	};
+
+	// Size of pools changes to prevent duplicates
+	int iImagePoolSize, iTopTextPoolSize, iBottomTextPoolSize;
+	Sprite selectedImage;
+	string sSelectedTopText, sSelectedBottomText;
+
+	bool bImageSelected, bTopTextSelected, bBottomTextSelected;
+	public Image MemeImage;
+	public Text MemeTopText, MemeBottomText;
+	int[] iSelectedIndexes = {0, 0, 0, 0, 0};
 
 	// Use this for initialization
 	void Start () {
-		iPoolSize = IMAGE_QUANTIY;
+		MemeImage.GetComponent<Image>().overrideSprite = null;
+		MemeImage.GetComponent<Image>().enabled = false;
+		MemeTopText.text = "";
+		MemeTopText.enabled = false;
+		MemeBottomText.text = "";
+		MemeBottomText.enabled = false;
+		iImagePoolSize = IMAGE_QUANTIY;
+		iTopTextPoolSize = TOP_TEXTS;
+		iBottomTextPoolSize = BOTTOM_TEXTS;
 		funSelectImages();
+		funSelectTopTexts();
+		funSelectBottomTexts();
+		bImageSelected = false;
+		bTopTextSelected = false;
+		bBottomTextSelected = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if(bImageSelected && bTopTextSelected && bBottomTextSelected) {
+			StartCoroutine(coShowMeme());
+			bImageSelected = false;
+		}
 	}
 
 	void funSelectImages() {
 		int index;
 		// Reset pool size to pick images
-		if(iPoolSize == 0) {
-			iPoolSize = IMAGE_QUANTIY;
+		if(iImagePoolSize == 0) {
+			iImagePoolSize = IMAGE_QUANTIY;
 		}
 		
-		// Select 5 indexes of images from memes array
+		// Select 5 indexes of images from Memes array
 		for(int i = 0; i < 5; i++) {
 			// Obtain random index
-			index = Random.Range(0, iPoolSize);
+			index = Random.Range(0, iImagePoolSize);
 			// Assign image to button
-			buttons[i].GetComponent<Image>().overrideSprite = memes[index];
+			Buttons[i].GetComponent<Button>().interactable = true;
+			Buttons[i].GetComponent<Image>().overrideSprite = Memes[index];
 			// Move selected image to the end of the pool
-			Sprite temp = memes[iPoolSize - 1];
-			memes[iPoolSize - 1] = memes[index];
+			Sprite temp = Memes[iImagePoolSize - 1];
+			Memes[iImagePoolSize - 1] = Memes[index];
+			iSelectedIndexes[i] = iImagePoolSize - 1;
 			// Swap last to be in pool
-			memes[index] = temp;
+			Memes[index] = temp;
 			// Decrease pool to erase duplicates
-			iPoolSize--;
+			iImagePoolSize--;
 		}
 	}
 
-	public void funDisable(int iButtonIndex) {
+	void funSelectTopTexts() {
+		int index;
+		// Reset pool size to pick images
+		if(iTopTextPoolSize == 0) {
+			iTopTextPoolSize = TOP_TEXTS;
+		}
+		
+		// Select 5 indexes of top texts from top texts array
 		for(int i = 0; i < 5; i++) {
-			buttons[i].GetComponent<Button>().interactable = false;
-			buttons[i].GetComponent<Button>().enabled = false;
+			// Obtain random index
+			index = Random.Range(0, iTopTextPoolSize);
+			// Assign image to button
+			TopTexts[i].text = sTopTexts[index];
+			TopTexts[i].transform.parent.GetComponent<Button>().interactable = true;
+			// Move selected image to the end of the pool
+			string temp = sTopTexts[iTopTextPoolSize - 1];
+			sTopTexts[iTopTextPoolSize - 1] = sTopTexts[index];
+			// Swap last to be in pool
+			sTopTexts[index] = temp;
+			// Decrease pool to erase duplicates
+			iTopTextPoolSize--;
+		}
+	}
+
+	void funSelectBottomTexts() {
+		int index;
+		// Reset pool size to pick images
+		if(iBottomTextPoolSize == 0) {
+			iBottomTextPoolSize = BOTTOM_TEXTS;
+		}
+		
+		// Select 5 indexes of top texts from top texts array
+		for(int i = 0; i < 5; i++) {
+			// Obtain random index
+			index = Random.Range(0, iBottomTextPoolSize);
+			// Assign image to button
+			BottomTexts[i].text = sBottomTexts[index];
+			BottomTexts[i].transform.parent.GetComponent<Button>().interactable = true;
+			// Move selected image to the end of the pool
+			string temp = sBottomTexts[iBottomTextPoolSize - 1];
+			sBottomTexts[iBottomTextPoolSize - 1] = sBottomTexts[index];
+			// Swap last to be in pool
+			sBottomTexts[index] = temp;
+			// Decrease pool to erase duplicates
+			iBottomTextPoolSize--;
+		}
+	}
+
+	public void funDisableImages(int iButtonIndex) {
+		for(int i = 0; i < 5; i++) {
 			if(i == iButtonIndex) {
-				// Show selected
+				selectedImage = Memes[iSelectedIndexes[i]];
+			}
+			Buttons[i].GetComponent<Button>().interactable = false;
+		}
+		bImageSelected = true;
+	}
+
+	public void funDisableTopTexts(int iTopTextIndex) {
+		for(int i = 0; i < 5; i++) {
+			TopTexts[i].transform.parent.GetComponent<Button>().interactable = false;
+			if(i == iTopTextIndex) {
+				sSelectedTopText = TopTexts[i].text;
 			}
 		}
+		bTopTextSelected = true;
+	}
+
+	public void funDisableBottomTexts(int iBottomTextIndex) {
+		for(int i = 0; i < 5; i++) {
+			BottomTexts[i].transform.parent.GetComponent<Button>().interactable = false;
+			if(i == iBottomTextIndex) {
+				sSelectedBottomText = BottomTexts[i].text;
+			}
+		}
+		bBottomTextSelected = true;
+	}
+
+	IEnumerator coShowMeme() {
+		MemeImage.GetComponent<Image>().enabled = true;
+		MemeImage.GetComponent<Image>().overrideSprite = selectedImage;
+		MemeTopText.enabled = true;
+		MemeBottomText.enabled = true;
+		MemeTopText.text = sSelectedTopText;
+		MemeBottomText.text = sSelectedBottomText;
+		yield return new WaitForSeconds(2);
+		funReset();
+	}
+
+	void funReset() {
+		MemeImage.GetComponent<Image>().enabled = false;
+		MemeTopText.text = "";
+		MemeBottomText.text = "";
+		MemeTopText.enabled = false;
+		MemeBottomText.enabled = false;
+		bImageSelected = false;
+		bTopTextSelected = false;
+		bBottomTextSelected = false;
+		funSelectImages();
+		funSelectTopTexts();
+		funSelectBottomTexts();
 	}
 
 }
