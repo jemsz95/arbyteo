@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
- using UnityEngine.UI;
+using UnityEngine.UI;
 
 public class MemeDesignerManager : MonoBehaviour {
 
@@ -70,6 +70,8 @@ public class MemeDesignerManager : MonoBehaviour {
 	public Text MemeTopText, MemeBottomText;
 	int[] iSelectedIndexes = {0, 0, 0, 0, 0};
 
+	Dictionary<string, bool> Combinations;
+
 	// Use this for initialization
 	void Start () {
 		MemeImage.GetComponent<Image>().overrideSprite = null;
@@ -87,6 +89,7 @@ public class MemeDesignerManager : MonoBehaviour {
 		bImageSelected = false;
 		bTopTextSelected = false;
 		bBottomTextSelected = false;
+		Combinations = new Dictionary<string, bool>();
 	}
 	
 	// Update is called once per frame
@@ -133,10 +136,10 @@ public class MemeDesignerManager : MonoBehaviour {
 		for(int i = 0; i < 5; i++) {
 			// Obtain random index
 			index = Random.Range(0, iTopTextPoolSize);
-			// Assign image to button
+			// Assign text
 			TopTexts[i].text = sTopTexts[index];
 			TopTexts[i].transform.parent.GetComponent<Button>().interactable = true;
-			// Move selected image to the end of the pool
+			// Move selected text to the end of the pool
 			string temp = sTopTexts[iTopTextPoolSize - 1];
 			sTopTexts[iTopTextPoolSize - 1] = sTopTexts[index];
 			// Swap last to be in pool
@@ -157,10 +160,10 @@ public class MemeDesignerManager : MonoBehaviour {
 		for(int i = 0; i < 5; i++) {
 			// Obtain random index
 			index = Random.Range(0, iBottomTextPoolSize);
-			// Assign image to button
+			// Assign text
 			BottomTexts[i].text = sBottomTexts[index];
 			BottomTexts[i].transform.parent.GetComponent<Button>().interactable = true;
-			// Move selected image to the end of the pool
+			// Move selected text to the end of the pool
 			string temp = sBottomTexts[iBottomTextPoolSize - 1];
 			sBottomTexts[iBottomTextPoolSize - 1] = sBottomTexts[index];
 			// Swap last to be in pool
@@ -212,6 +215,15 @@ public class MemeDesignerManager : MonoBehaviour {
 	}
 
 	void funReset() {
+		string keyName = MemeImage.GetComponent<Image>().name + MemeTopText.text + MemeBottomText.text;
+		if(!Combinations.ContainsKey(keyName)) {
+			// Add points in using game manager
+			Debug.Log("Add");
+			Combinations.Add(keyName, true);
+		}
+		else {
+			Debug.Log("Less");
+		}
 		MemeImage.GetComponent<Image>().enabled = false;
 		MemeTopText.text = "";
 		MemeBottomText.text = "";
@@ -224,5 +236,4 @@ public class MemeDesignerManager : MonoBehaviour {
 		funSelectTopTexts();
 		funSelectBottomTexts();
 	}
-
 }
