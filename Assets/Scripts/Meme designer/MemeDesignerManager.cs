@@ -287,7 +287,8 @@ public class MemeDesignerManager : MonoBehaviour {
 
 	void funPassReferenceToManager() {
 		// Aqui pasar datos
-		_bLevelStart = false; 
+		_bLevelStart = false;
+		_funDisableInteraction();
 		GameObject manager = GameObject.Find("Game Manager"); 
 		if (manager != null) {
 			//Manager.Instance.something pass references. 
@@ -295,5 +296,13 @@ public class MemeDesignerManager : MonoBehaviour {
 			Debug.Log ("Score"); 
 		}
 
+	}
+
+	void _funDisableInteraction() {
+		for(int i = 0; i < 5; i++) {
+			refButtons[i].GetComponent<Button>().interactable = false;
+			refTopTexts[i].GetComponentInParent<Button>().interactable = false;
+			refBottomTexts[i].GetComponentInParent<Button>().interactable = false;
+		}
 	}
 }
